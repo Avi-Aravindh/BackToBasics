@@ -1,2 +1,2 @@
 # BackToBasics
-Practice for Front-End developer questions
+Practice for Front-End developer interview

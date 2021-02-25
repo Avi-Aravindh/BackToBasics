@@ -1,0 +1,158 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <style>
+      html body {
+        margin: 0;
+        background-color: lightcyan;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        user-select: none;
+      }
+      .container {
+        width: 600px;
+        height: 600px;
+        border: 1px solid red;
+        display: flex;
+        flex-direction: column;
+      }
+      .row {
+        width: 100%;
+        height: 200px;
+        /* border: 1px solid red; */
+        display: flex;
+        box-sizing: border-box;
+      }
+      .col {
+        border: 1px solid red;
+        width: 200px;
+        /* height: 100%; */
+        box-sizing: border-box;
+        color: black;
+        font-size: 4em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        user-select: none;
+      }
+      .col:hover {
+        cursor: pointer;
+      }
+      .col-disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        background-color: lightpink;
+      }
+
+      #reset {
+        margin: 15px;
+        width: 150px;
+        font-size: 1em;
+        padding: 10px;
+        background-color: royalblue;
+        color: white;
+        cursor: pointer;
+      }
+      #winner {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col" id="0"></div>
+        <div class="col" id="1"></div>
+        <div class="col" id="2"></div>
+      </div>
+      <div class="row">
+        <div class="col" id="3"></div>
+        <div class="col" id="4"></div>
+        <div class="col" id="5"></div>
+      </div>
+      <div class="row">
+        <div class="col" id="6"></div>
+        <div class="col" id="7"></div>
+        <div class="col" id="8"></div>
+      </div>
+    </div>
+    <button id="reset">Reset</button>
+    <div id="winner">Winner, winner, chicken dinner</div>
+  </body>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let allCells = Array(9).fill(null);
+
+      console.log('dom loaded');
+
+      const colCells = document.getElementsByClassName('col');
+
+      Array.prototype.forEach.call(colCells, (colcell) => {
+        colcell.addEventListener('click', (e) => {
+          if (allCells[e.currentTarget.id] === 1) {
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+          }
+          console.log(e.currentTarget.id, e.currentTarget.parentNode.id);
+          allCells[e.currentTarget.id] = 1;
+          updateCells();
+        });
+      });
+
+      function updateCells() {
+        for (let i = 0; i < allCells.length; i++) {
+          const element = document.getElementById(i);
+
+          if (allCells[i] === 1) {
+            element.innerHTML = 'X';
+            element.classList.add('col-disabled');
+          } else {
+            element.innerHTML = '';
+            element.classList.remove('col-disabled');
+          }
+        }
+        checkGameStatus();
+      }
+
+      function checkGameStatus() {
+        console.log(allCells);
+        let selectedCells = [];
+        allCells.forEach((cell, index) => {
+          if (cell === 1) {
+            selectedCells.push(index);
+          }
+        });
+        console.log(selectedCells, selectedCells.join() == [0, 1, 2].join());
+        if (
+          selectedCells.join().indexOf([0, 1, 2].join()) > -1 ||
+          selectedCells.join().indexOf([3, 4, 5].join()) > -1 ||
+          selectedCells.join().indexOf([6, 7, 8].join()) > -1 ||
+          selectedCells.join().indexOf([0, 3, 6].join()) > -1 ||
+          selectedCells.join().indexOf([1, 4, 5].join()) > -1 ||
+          selectedCells.join().indexOf([2, 5, 8].join()) > -1 ||
+          selectedCells.join().indexOf([0, 4, 8].join()) > -1 ||
+          selectedCells.join().indexOf([6, 4, 2].join()) > -1
+        ) {
+          console.log('match winner');
+          const winner = document.getElementById('winner');
+          winner.style.display = 'block';
+        }
+      }
+
+      const resetButton = document.getElementById('reset');
+
+      resetButton.addEventListener('click', () => {
+        const winner = document.getElementById('winner');
+        winner.style.display = 'none';
+        allCells = Array(9).fill(null);
+        updateCells();
+      });
+    });
+  </script>
+</html>

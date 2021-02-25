@@ -1,0 +1,69 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #container {
+        display: flex;
+        overflow-x: hidden;
+        width: 600px;
+        margin-left: 300px;
+        position: relative;
+      }
+      #resizer {
+        left: 50%;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 2px;
+        background-color: black;
+        cursor: ew-resize;
+      }
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const resizer = document.getElementById('resizer');
+        const leftside = document.getElementById('modifiedImage');
+        let leftWidth = 0;
+        const mouseDownHandler = (e) => {
+          console.log('mousedown', e);
+
+          let x = 0,
+            y = 0;
+          x = e.clientX;
+          y = e.clientY;
+          leftWidth = modifiedImage.getBoundingClientRect();
+          console.log({ leftWidth });
+          resizer.addEventListener('mousemove', mouseMoveHandler);
+        };
+        const mouseUpHandler = (e) => {
+          console.log('mouseup', e);
+        };
+        const mouseMoveHandler = (e) => {
+          console.log('mouse move', e, e.clientX, e.x);
+          resizer.style.left = '150px';
+        };
+        resizer.addEventListener('mousedown', mouseDownHandler);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="modifiedImage">
+        <img
+          src="https://images.unsplash.com/photo-1443397646383-16272048780e?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1267&q=80"
+          width="300"
+          height="600"
+        />
+      </div>
+      <div id="resizer"></div>
+
+      <img
+        src="https://images.unsplash.com/photo-1471922694854-ff1b63b20054?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1352&q=80"
+        width="300"
+        height="600"
+      />
+    </div>
+  </body>
+</html>

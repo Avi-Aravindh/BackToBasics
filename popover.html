@@ -1,0 +1,73 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Popover</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+      }
+      .button {
+        background-color: royalblue;
+        color: white;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        /* height: 00px; */
+        width: 300px;
+        border: 1px solid red;
+      }
+      #popoverLabel {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <button class="button">Popover button</button>
+      <label id="popoverLabel">I am a popover</label>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('content loaded');
+        var showPopover = false;
+        const buttonElement = document.getElementsByClassName('button')[0];
+        console.log(buttonElement, document.getElementsByClassName);
+        buttonElement.addEventListener('click', () => handlePopover());
+        const popoverLabel = document.getElementById('popoverLabel');
+        function handlePopover() {
+          alert(showPopover);
+
+          if (showPopover) {
+            hide();
+          } else {
+            show();
+          }
+        }
+      });
+
+      function show() {
+        alert('show');
+        showPopover = true;
+
+        const popoverLabel = document.getElementById('popoverLabel');
+        popoverLabel.style.display = 'block';
+      }
+
+      function hide() {
+        alert('hide');
+        showPopover = false;
+
+        const popoverLabel = document.getElementById('popoverLabel');
+        popoverLabel.style.display = 'none';
+      }
+    </script>
+  </body>
+</html>

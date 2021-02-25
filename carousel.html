@@ -1,0 +1,149 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carousel</title>
+    <style>
+      html body {
+        margin: 0;
+        background-color: lightcyan;
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+
+        user-select: none;
+      }
+      .carousel-container {
+        display: flex;
+        flex-direction: column;
+      }
+      .container {
+        width: 600px;
+        height: 400px;
+        /* border: 1px solid red; */
+        display: flex;
+        position: relative;
+        justify-content: space-between;
+        /* flex-direction: row; */
+        box-sizing: border-box;
+        /* overflow: hidden; */
+      }
+      .image {
+        position: absolute;
+        transition: all 0.5s ease-in-out;
+      }
+      .arrow {
+        font-size: 45px;
+        color: red;
+        background: transparent;
+        width: 50px;
+        height: 400px;
+        /* position: static; */
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+      .arrow-left {
+        margin-left: 25px;
+      }
+      .arrow-right {
+        margin-right: 10px;
+      }
+      .footer {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .circle {
+        border: 1px solid gray;
+        border-radius: 50%;
+        height: 10px;
+        width: 10px;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carousel-container">
+      <div class="container">
+        <div class="arrow arrow-left"><</div>
+        <div class="arrow arrow-right">></div>
+      </div>
+
+      <div class="footer"></div>
+    </div>
+  </body>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const timer = 10000;
+      let counter = 0;
+      const imagesSources = [
+        'https://images.unsplash.com/photo-1443397646383-16272048780e?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1267&q=80',
+        'https://images.unsplash.com/photo-1471922694854-ff1b63b20054?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1352&q=80',
+        'https://images.unsplash.com/photo-1547845178-6b771c23c1e8?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1339&q=80',
+        'https://images.unsplash.com/photo-1600141652098-c9979941e8ad?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1489&q=80',
+        'https://images.unsplash.com/photo-1593642634367-d91a135587b5?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+      ];
+      const imageContainer = document.getElementsByClassName('container')[0];
+      for (let i = 0; i < imagesSources.length; i++) {
+        let image = document.createElement('img');
+        image.setAttribute('width', '600px');
+        image.setAttribute('height', '400px');
+        image.setAttribute('src', imagesSources[i]);
+        image.classList.add('image');
+        imageContainer.appendChild(image);
+      }
+      const circleContainer = document.getElementsByClassName('footer')[0];
+      for (let i = 0; i < imagesSources.length; i++) {
+        let circle = document.createElement('div');
+        circle.classList.add('circle');
+        circleContainer.appendChild(circle);
+      }
+
+      const allImages = document.getElementsByClassName('image');
+      const allCircles = document.getElementsByClassName('circle');
+      const arrowLeft = document.getElementsByClassName('arrow-left')[0];
+      const arrowRight = document.getElementsByClassName('arrow-right')[0];
+      setVisible(counter);
+      arrowLeft.addEventListener('click', () => {
+        if (counter === 0) {
+          counter = allImages.length - 1;
+        } else {
+          counter = counter - 1;
+        }
+
+        setVisible(counter);
+      });
+      arrowRight.addEventListener('click', () => {
+        if (counter === allImages.length - 1) {
+          counter = 0;
+        } else {
+          counter = counter + 1;
+        }
+
+        setVisible(counter);
+      });
+
+      function setVisible(counter) {
+        for (let i = 0; i < allImages.length; i++) {
+          allImages[i].style.opacity = 0;
+        }
+        allImages[counter].style.opacity = 1;
+        for (let i = 0; i < allImages.length; i++) {
+          allCircles[i].style.background = 'none';
+        }
+        allCircles[counter].style.background = 'gray';
+      }
+      console.log({ allImages });
+      setInterval(() => {
+        setVisible(counter);
+        counter++;
+        if (counter >= allImages.length) {
+          counter = 0;
+        }
+      }, timer);
+    });
+  </script>
+</html>

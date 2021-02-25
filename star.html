@@ -1,0 +1,63 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Star</title>
+    <style>
+      body {
+        background-color: turquoise;
+      }
+      .star-container .star {
+        margin-right: 25px;
+        color: grey;
+        display: inline-block;
+        cursor: pointer;
+        font-size: 20px;
+      }
+
+      .star-container .star.rated {
+        color: yellow;
+      }
+
+      .star-container:hover .star {
+        color: yellow;
+      }
+
+      .star-container .star:hover ~ .star {
+        color: grey;
+      }
+
+      .star-red {
+        color: red !important;
+      }
+    </style>
+
+    <script>
+      const selectedIds = [0, 1];
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('dom loaded');
+        const ids = document.getElementsByClassName('star');
+
+        updateSelected(ids);
+      });
+      function updateSelected(ids) {
+        console.log(ids);
+        for (let i = 0; i < ids.length; i++) {
+          console.log(ids[i]);
+          if (selectedIds.indexOf(i) > -1) {
+            ids[i].classList.add('star-red');
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="star-container">
+      <div class="star" id="0">*</div>
+      <div class="star" id="1">*</div>
+      <div class="star" id="2">*</div>
+      <div class="star" id="3">*</div>
+      <div class="star" id="4">*</div>
+    </div>
+  </body>
+</html>

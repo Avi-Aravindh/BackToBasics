@@ -1,0 +1,51 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .draggable {
+        cursor: move;
+        user-select: none;
+      }
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', (e) => {
+        let dragEle;
+
+        let x = 0,
+          y = 0;
+
+        const mouseDownHandler = (e) => {
+          dragEle = e.target;
+
+          const rect = dragEle.getBoundingClientRect();
+          x = e.pageX - rect.left;
+          y = e.pageY - rect.top;
+          console.log(rect);
+          document.addEventListener('mousemove', mouseMoveHandler);
+          document.addEventListener('mouseup', mouseUpHandler);
+        };
+
+        const mouseMoveHandler = function (e) {
+          // Set position for dragging element
+          dragEle.style.position = 'absolute';
+          dragEle.style.top = `${e.pageY - y}px`;
+          dragEle.style.left = `${e.pageX - x}px`;
+        };
+        const list = document.getElementById('list');
+        console.log({ list });
+        document.addEventListener('mousedown', mouseDownHandler);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="list">
+      <div class="draggable">A</div>
+      <div class="draggable">B</div>
+      <div class="draggable">C</div>
+      <div class="draggable">D</div>
+      <div class="draggable">E</div>
+    </div>
+  </body>
+</html>

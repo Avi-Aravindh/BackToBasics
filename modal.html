@@ -1,0 +1,68 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modal</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        background: green;
+      }
+      #wrapperContainer {
+        display: none;
+        background: green;
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        left: 0;
+      }
+      #modal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height: 400px;
+        background: white;
+      }
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const openButton = document.getElementById('open');
+        const closeButton = document.getElementById('close');
+        console.log(openButton);
+        openButton.addEventListener('click', handleOpen);
+        closeButton.addEventListener('click', handleClose);
+      });
+      function handleOpen() {
+        console.log('open');
+        const wrapperContainer = document.getElementById('wrapperContainer');
+        wrapperContainer.style.display = 'flex';
+      }
+      function handleClose() {
+        const wrapperContainer = document.getElementById('wrapperContainer');
+        wrapperContainer.style.display = 'none';
+      }
+    </script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="buttonContainer">
+        <button id="open">Open modal</button>
+      </div>
+      <div id="wrapperContainer">
+        <div id="modal">
+          <button id="close">close</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
